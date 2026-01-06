@@ -18,6 +18,7 @@ interface initialStateInterface {
     _id: string,
     username: string,
     imageUrl: string,
+    categories: string[],
     loading: boolean,
     error: null | string
 }
@@ -26,6 +27,7 @@ const initialState: initialStateInterface = {
   _id: "",
   username: "",
   imageUrl: "",
+  categories: [],
   loading: false,
   error: null as string | null,
 };

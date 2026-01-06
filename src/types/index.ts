@@ -10,6 +10,7 @@ export interface UserInterface {
     _id: string,
     username: string,
     imageUrl: string,
+    categories: string[]
 }
 
 export interface DeckInterface {
@@ -18,8 +19,9 @@ export interface DeckInterface {
   authorID: string,
   authorName?: string,
   color?: string,
-  public: boolean
-  cards: CardInterface[]
+  public: boolean,
+  cards: CardInterface[],
+  category: string | null
 }
 
 export interface AppDialogProps {

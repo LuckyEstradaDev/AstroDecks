@@ -2,6 +2,7 @@ import { FlashcardDialog } from "@/components/FlashcardComponents/FlashcardDialo
 import { DeckDropdown } from "@/components/DeckComponents/DeckDropdown";
 import FlashcardComponent from "@/components/FlashcardComponents/FlashcardPreview";
 import { Button } from "@/components/ui/button";
+import CategoryDropdown from "@/components/DeckComponents/CategoryDropdown";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import { addCard, changeVisibility, updateDeckCards } from "@/state/userDecks/userDecksSlice";
 import type { CardInterface, DeckInterface } from "@/types";
@@ -31,6 +32,8 @@ export default function DeckDetails() {
 
   const [isOwner, setIsOwner] = useState<boolean | null>(null)
 
+  
+
   useEffect(() => {
     const fetchDeckDetails = async () => {
       if (userDeck) {
@@ -50,6 +53,8 @@ export default function DeckDetails() {
     fetchDeckDetails()
     
   }, []);
+
+  
 
 
   // prevents the users from going to a different page when the changes arent saved
@@ -108,6 +113,8 @@ export default function DeckDetails() {
     setLearnDeckSettings(true)
   }
 
+  
+
   const confirmDeckSettingsHandler = (type: string) => {
     if (type == "learn") {
       navigate(`/learn/${deck?._id}`)
@@ -146,13 +153,16 @@ export default function DeckDetails() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2 mb-3 mt-5">
+          <div className="flex items-center gap-2 mb-6 mt-5">
             <div className="max-w-8 max-h-8">
               {user.imageUrl && (
                 <img className="rounded-full" src={user.imageUrl}></img>
               )}
             </div>
             <p>{isOwner ? user.username : deck.authorName}</p>
+          </div>
+          <div className="flex items-center gap-3 mb-3">
+            {isOwner && <CategoryDropdown deck={deck} setDeck={setDeck} setUnsavedChanges={setUnsavedChanges} isOwner={isOwner} />}
           </div>
           <div className="flex items-center gap-2 my-8 flex-wrap">
               { deck.authorID === user._id && (
@@ -182,7 +192,7 @@ export default function DeckDetails() {
 
       {
         deck && ((isOwner == false && deck.public) || (isOwner == true))? 
-        <section className="h-[80%] mt-[13rem] main-container">
+        <section className="h-[80%] mt-[16rem] main-container">
           {!deck.cards || deck.cards.length === 0 ? (
             <article className="w-full h-[80%] items-center justify-center flex-col flex gap-5">
               <h1 className="font-semibold text-4xl text-center">
