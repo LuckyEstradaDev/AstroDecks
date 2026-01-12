@@ -10,8 +10,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Plus, Trash2 } from "lucide-react";
 import type { DeckInterface } from "@/types";
-import { useAppDispatch } from "@/hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import { changeCategory } from "@/state/userDecks/userDecksSlice";
+import { storeCategory } from "@/state/user/userSlice";
 
 type Props = {
   deck?: DeckInterface;
@@ -25,13 +26,11 @@ export default function CategoryDropdown({
   setDeck,
   setUnsavedChanges,
 }: Props) {
+
   const dispatch = useAppDispatch();
-  const [categories, setCategories] = useState<string[]>([
-    "General",
-    "Science",
-    "Math",
-    "History",
-  ]);
+  const user = useAppSelector(state => state.user)
+
+  const [categories, setCategories] = useState<string[]>([]);
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(
     null
@@ -43,7 +42,8 @@ export default function CategoryDropdown({
   useEffect(() => {
     if(!deck) return
     setSelectedCategory(deck.category || null);
-  }, [deck]);
+    setCategories(user.categories)
+  }, [deck, user]);
 
   const handleAddCategory = () => {
     const trimmed = newCategory.trim();
@@ -51,6 +51,7 @@ export default function CategoryDropdown({
 
     if (!categories.includes(trimmed)) {
       setCategories((p) => [trimmed, ...p]);
+      dispatch(storeCategory({_id: deck?.authorID, categories: [...categories, trimmed]}))
     }
 
     setSelectedCategory(trimmed);
@@ -69,6 +70,7 @@ export default function CategoryDropdown({
       setDeck((prev) =>
         prev ? { ...prev, category: null } : prev
       );
+      dispatch(storeCategory({_id: deck?.authorID, categories: [...categories]}))
     }
 
     setUnsavedChanges(true);
