@@ -12,7 +12,7 @@ import { useContext, useState, type FormEvent } from "react"
 import axios from "axios"
 import Logo from '/images/AstroDecksLogo.svg'
 import { Eye, LockKeyhole, Mail } from "lucide-react"
-import { AuthContext } from "@/components/AuthProvider"
+import { AuthContext } from "@/providers/AuthProvider"
 import { Spinner } from "@/components/ui/shadcn-io/spinner"
 
 export default function SignInComponent() {

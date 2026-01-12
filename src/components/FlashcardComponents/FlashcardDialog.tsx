@@ -97,7 +97,7 @@ export function FlashcardDialog({ children, handleSubmit, editCardData }: AppCre
             </div> */}
             <div className="flex gap-2">
             <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button variant="outline-light">Cancel</Button>
             </DialogClose>
 
             { 

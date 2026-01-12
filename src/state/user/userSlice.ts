@@ -14,10 +14,23 @@ export const fetchUser = createAsyncThunk(
   }
 );
 
+export const storeCategory = createAsyncThunk(
+  "user/storeCategory",
+  async(dataPayload: any, thunkAPI) => {
+    try {
+      const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/api/users/${dataPayload._id}`, {categories: dataPayload.categories});
+      return data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+)
+
 interface initialStateInterface {
     _id: string,
     username: string,
     imageUrl: string,
+    categories: string[],
     loading: boolean,
     error: null | string
 }
@@ -26,6 +39,7 @@ const initialState: initialStateInterface = {
   _id: "",
   username: "",
   imageUrl: "",
+  categories: [],
   loading: false,
   error: null as string | null,
 };
@@ -51,7 +65,21 @@ export const userSlice = createSlice({
         const data: any = action.payload
         state.loading = false;
         state.error = data.message as string;
-      });
+      })
+      .addCase(storeCategory.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(storeCategory.fulfilled, (state, action) => {
+        const data = action.payload
+        state.loading = false;
+        state.categories = data.categories
+      })
+      .addCase(storeCategory.rejected, (state, action) => {
+        const data: any = action.payload
+        state.loading = false
+        state.error = data.message as string;
+      })
   },
 });
 

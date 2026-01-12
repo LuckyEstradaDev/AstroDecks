@@ -63,7 +63,7 @@ export default function AppInputDialog({ handleSubmit, inputFields, dialogTitle,
           })}
           <DialogFooter>
             <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button variant="outline-light">Cancel</Button>
             </DialogClose>
               <Button type="submit">Confirm</Button>
           </DialogFooter>

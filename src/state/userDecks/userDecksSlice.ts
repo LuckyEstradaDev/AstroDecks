@@ -58,7 +58,6 @@ export const updateDeckCards = createAsyncThunk(
 
     try {
       await axios.patch(`${import.meta.env.VITE_API_URL}/api/decks/${dataPayload._id}`, {cards: dataPayload.cards})
-      
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.response.data)
     }
@@ -72,6 +71,18 @@ export const changeVisibility = createAsyncThunk(
     try {
       await axios.patch(`${import.meta.env.VITE_API_URL}/api/decks/${data._id}`, {public: data.public})
     } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.response.data)
+    }
+  }
+)
+
+export const changeCategory = createAsyncThunk(
+  'userDecks/changeCategory',
+  async(data: {_id: string, category: string}, thunkAPI) => {
+    try{
+      console.log("Category changed")
+      await axios.patch(`${import.meta.env.VITE_API_URL}/api/decks/${data._id}`, {category: data.category})
+    } catch(error: any) {
       return thunkAPI.rejectWithValue(error.response.data)
     }
   }
@@ -191,6 +202,16 @@ const userDecksSlice = createSlice({
           state.loading = false;
         })
         .addCase(updateDeckCards.rejected, (state, action) => {
+          const data: any = action.payload
+          state.loading = false,
+          state.error = data.message as string
+        })
+        .addCase(changeCategory.pending, (state) => {
+          state.loading = true,
+          state.error = null
+        }).addCase(changeCategory.fulfilled, (state) => {
+          state.loading = false;
+        }).addCase(changeCategory.rejected, (state, action) => {
           const data: any = action.payload
           state.loading = false,
           state.error = data.message as string

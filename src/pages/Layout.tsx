@@ -8,7 +8,7 @@ import { fetchUser } from "../state/user/userSlice";
 import { Switch } from "@/components/ui/switch";
 import { LogOut, Moon, PanelLeft, Sun } from "lucide-react";
 import type { CSSProperties } from "react";
-import { AuthContext } from "@/components/AuthProvider";
+import { AuthContext } from "@/providers/AuthProvider";
 
 // ---- inner component to safely call useSidebar ----
 function InnerLayout() {

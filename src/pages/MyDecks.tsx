@@ -14,7 +14,7 @@ import {
 export default function MyDecks() {
 
   const [open, onOpenChange] = useState<boolean>(false)
-  // const [selectedCategory, setSelectedCategory] = useState<string>("all")
+  const [selectedCategory, setSelectedCategory] = useState<string>("all")
   const decks = useAppSelector(state => state.userDecks)
   const user = useAppSelector(state => state.user)
   const dispatch = useAppDispatch()
@@ -37,7 +37,7 @@ export default function MyDecks() {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    const data = {title, authorID: user._id, public: true, color: "#bfdbfe", cards: []}
+    const data = {title, authorID: user._id, public: true, color: "#bfdbfe", cards: [], category: null}
     dispatch(pushDeck(data))
     setTitle("Untitled")
     onOpenChange(false)
@@ -114,7 +114,7 @@ export default function MyDecks() {
           )}
         </section>
 
-        {/* <section className="w-full mt-10 pt-6 ">
+        <section className="w-full mt-10 pt-6 ">
           <div><p className="font-medium !text-2xl mb-6">Categories</p></div>
           <div className="flex flex-wrap gap-2">
             <Button
@@ -153,7 +153,7 @@ export default function MyDecks() {
               History
             </Button>
           </div>
-        </section> */}
+        </section>
       </main>
     </>
   );

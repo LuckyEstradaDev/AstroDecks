@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react"
 import SignInComponent from "./SignInComponent"
-import { AuthContext } from "@/components/AuthProvider"
+import { AuthContext } from "@/providers/AuthProvider"
 import { useNavigate } from "react-router-dom"
 import LoadingComponent from "@/components/ReusableComponents/LoadingComponent"
 
