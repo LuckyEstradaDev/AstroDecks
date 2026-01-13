@@ -78,9 +78,8 @@ export const changeVisibility = createAsyncThunk(
 
 export const changeCategory = createAsyncThunk(
   'userDecks/changeCategory',
-  async(data: {_id: string, category: string}, thunkAPI) => {
+  async(data: {_id: string, category: string | null}, thunkAPI) => {
     try{
-      console.log("Category changed")
       await axios.patch(`${import.meta.env.VITE_API_URL}/api/decks/${data._id}`, {category: data.category})
     } catch(error: any) {
       return thunkAPI.rejectWithValue(error.response.data)

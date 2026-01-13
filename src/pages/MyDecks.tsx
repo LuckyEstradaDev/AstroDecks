@@ -117,42 +117,27 @@ export default function MyDecks() {
         <section className="w-full mt-10 pt-6 ">
           <div><p className="font-medium !text-2xl mb-6">Categories</p></div>
           <div className="flex flex-wrap gap-2">
-            <Button
-              variant={selectedCategory === "all" ? "default" : "outline"}
-              onClick={() => setSelectedCategory("all")}
-              className="font-medium"
-            >
-              All
-            </Button>
-            <Button
-              variant={selectedCategory === "math" ? "default" : "outline"}
-              onClick={() => setSelectedCategory("math")}
-              className="font-medium"
-            >
-              Math
-            </Button>
-            <Button
-              variant={selectedCategory === "science" ? "default" : "outline"}
-              onClick={() => setSelectedCategory("science")}
-              className="font-medium"
-            >
-              Science
-            </Button>
-            <Button
-              variant={selectedCategory === "languages" ? "default" : "outline"}
-              onClick={() => setSelectedCategory("languages")}
-              className="font-medium"
-            >
-              Languages
-            </Button>
-            <Button
-              variant={selectedCategory === "history" ? "default" : "outline"}
-              onClick={() => setSelectedCategory("history")}
-              className="font-medium"
-            >
-              History
-            </Button>
+            {
+              user.categories.map((category: string) => {
+                return (
+                  <Button
+                    variant={selectedCategory === category ? "default" : "outline"}
+                    onClick={() => setSelectedCategory(category)}
+                    className="font-medium rounded-full"
+                  >
+                    {category}
+                  </Button>
+                )
+              })
+            }
           </div>
+          <div className="py-3 mt-5 grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] lg:grid-cols-[repeat(auto-fit,minmax(250px,17rem))] gap-7">
+              {decks?.decks.map((data: any) => {
+                if(data.category == selectedCategory) {
+                  return <Deck key={data._id} deck={data} />
+                }
+              })}
+            </div>
         </section>
       </main>
     </>
