@@ -162,7 +162,7 @@ export default function DeckDetails() {
             <p>{isOwner ? user.username : deck.authorName}</p>
           </div>
           <div className="flex items-center gap-3 mb-3">
-            {isOwner && <CategoryDropdown deck={deck} setDeck={setDeck} setUnsavedChanges={setUnsavedChanges} isOwner={isOwner} />}
+            {isOwner && <CategoryDropdown deck={deck} setDeck={setDeck} isOwner={isOwner} />}
           </div>
           <div className="flex items-center gap-2 my-8 flex-wrap">
               { deck.authorID === user._id && (

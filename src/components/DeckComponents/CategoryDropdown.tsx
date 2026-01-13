@@ -17,20 +17,18 @@ import { storeCategory } from "@/state/user/userSlice";
 type Props = {
   deck?: DeckInterface;
   setDeck: React.Dispatch<React.SetStateAction<DeckInterface | undefined>>;
-  setUnsavedChanges: (b: boolean) => void;
   isOwner?: boolean | null;
 };
 
 export default function CategoryDropdown({
   deck,
   setDeck,
-  setUnsavedChanges,
 }: Props) {
 
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.user)
 
-  const [categories, setCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState<string[]>([...user.categories]);
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(
     null
@@ -42,7 +40,6 @@ export default function CategoryDropdown({
   useEffect(() => {
     if(!deck) return
     setSelectedCategory(deck.category || null);
-    setCategories(user.categories)
   }, [deck, user]);
 
   const handleAddCategory = () => {
@@ -53,27 +50,24 @@ export default function CategoryDropdown({
       setCategories((p) => [trimmed, ...p]);
       dispatch(storeCategory({_id: deck?.authorID, categories: [...categories, trimmed]}))
     }
-
-    setSelectedCategory(trimmed);
-    setDeck((prev) => (prev ? { ...prev, category: trimmed } : prev));
-
+    
     setNewCategory("");
     setAddingCategory(false);
-    setUnsavedChanges(true);
   };
 
   const handleDeleteCategory = (cat: string) => {
-    setCategories((prev) => prev.filter((c) => c !== cat));
+    const updatedCategories = categories.filter((c) => c !== cat)
+    setCategories(updatedCategories);
 
     if (selectedCategory === cat) {
       setSelectedCategory(null);
       setDeck((prev) =>
         prev ? { ...prev, category: null } : prev
       );
-      dispatch(storeCategory({_id: deck?.authorID, categories: [...categories]}))
+      dispatch(changeCategory({_id: deck?._id!, category: null}))
     }
 
-    setUnsavedChanges(true);
+    dispatch(storeCategory({_id: deck?.authorID, categories: [...updatedCategories]}))
   };
 
   const handleSetSelectedCategory = (category: string) => { // sets a category to the deck
@@ -85,15 +79,15 @@ export default function CategoryDropdown({
     <div className="flex items-center gap-4">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="w-fit justify-between">
-            <span className="truncate">
+          <Button variant="default" className="w-fit justify-between rounded-full">
+            <span className="truncate text-sm">
               {selectedCategory ?? "Uncategorized"}
             </span>
           </Button>
         </DropdownMenuTrigger>
 
         <DropdownMenuContent
-          className="w-[260px]"
+          className="w-[260px] !text-black"
           onKeyDownCapture={(e) => {
             // Capture phase prevents Radix's internal "type-to-select" behavior
             const k = e.key;
@@ -116,7 +110,6 @@ export default function CategoryDropdown({
                 onSelect={() => {
                   handleSetSelectedCategory(c);
                   setDeck((prev) => (prev ? { ...prev, category: c } : prev));
-                  setUnsavedChanges(true);
                 }}
               >
                 {c}
