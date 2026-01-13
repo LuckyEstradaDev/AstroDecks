@@ -6,7 +6,7 @@ export default function Flashcard({front, back, definitionsFirst}: {front: strin
     <div className="w-[100%] max-w-[40rem] h-[50vw] min-h-[15rem] max-h-[25rem] [perspective:800px]" onClick={() => setFlipped((prev) => back != "" && !prev)}>
       <div
         className={`${
-          isFlipped ? "" : "[transform:rotateY(180deg)]"
+          !isFlipped ? "" : "[transform:rotateY(-180deg)]"
         } [transform-style:preserve-3d] w-full h-full transition-transform duration-500 relative ${!back ? "": "cursor-pointer"}`}>
 
         <div className="absolute w-full h-full p-4 md:p-8 overflow-y-auto border-2 border-black text-black-200 bg-white dark:bg-foreground rounded-md shadow-md backface-hidden">

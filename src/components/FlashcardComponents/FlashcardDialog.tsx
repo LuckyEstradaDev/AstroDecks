@@ -89,6 +89,11 @@ export function FlashcardDialog({ children, handleSubmit, editCardData }: AppCre
                 <Label>Back</Label>
                 <Textarea onKeyDown={handleKeyDown} className="mt-2 max-h-[10rem] resize-none overflow-auto !text-base bg-white dark:bg-foreground border-[2px] border-dark-200" placeholder="The powerhouse of the cell." value={definition} onChange={(e) => setDefinition(e.target.value)}/>
               </div>
+
+              <div className="mt-4 gap-2 flex flex-col">
+                <p className="text-gray-700 !text-sm">The front shows first when using the flashcard feature</p>
+                <p className="text-gray-700 !text-sm">The back is used as choices when using the quiz feature</p>
+              </div>
           </div>
           <DialogFooter className="flex items-center !justify-end">
             {/* <div className="flex items-center gap-2">

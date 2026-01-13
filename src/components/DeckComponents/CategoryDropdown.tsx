@@ -30,7 +30,7 @@ export default function CategoryDropdown({
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.user)
 
-  const [categories, setCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState<string[]>([...user.categories]);
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(
     null
@@ -42,7 +42,7 @@ export default function CategoryDropdown({
   useEffect(() => {
     if(!deck) return
     setSelectedCategory(deck.category || null);
-    setCategories(user.categories)
+    console.log(user.categories)
   }, [deck, user]);
 
   const handleAddCategory = () => {

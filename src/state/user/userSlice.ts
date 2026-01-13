@@ -60,6 +60,7 @@ export const userSlice = createSlice({
         state._id = data._id;
         state.username = data.username;
         state.imageUrl = data.imageUrl
+        state.categories = data.categories
       })
       .addCase(fetchUser.rejected, (state, action) => {
         const data: any = action.payload
