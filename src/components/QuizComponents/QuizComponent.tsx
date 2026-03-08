@@ -17,7 +17,7 @@ export default function QuizComponent({question, index, length, choices, answer,
       <div className="text-sm text-gray-500 mb-2">Question {index + 1} of {length}</div>
 
       {/* Question */}
-      <h2 className="text-2xl font-semibold text-center mb-8">
+      <h2 className="text-xl font-semibold text-center mb-8">
         {question}
       </h2>
 
